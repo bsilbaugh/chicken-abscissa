@@ -53,6 +53,37 @@ Critical missing features:
 
 * Configuration of graph properties
 
+Installation
+============
+
+Latest "Stable" Release
+-----------------------
+
+Abscissa has not yet been formally released. You may, however, install a
+development snapshot; see Latest Development Version section.
+
+Latest Development Version
+--------------------------
+
+1. Clone the git repository on github; e.g.
+
+       git clone https://github.com/bsilbaugh/chicken-abscissa.git
+
+2. Change the current working directory to the directory of the cloned
+   repository; e.g.
+
+       cd chicken-abscissa
+
+3. Compile and install using the chicken-install program; e.g.
+
+       chicken-install
+
+  or
+
+      chicken-install -sudo
+
+  if you're egg repository requires super user privileges. Also see the
+  Chicken Scheme User Manual and Wiki for additional installation options.
 
 Language Specification
 ======================
