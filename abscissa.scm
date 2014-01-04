@@ -8,6 +8,17 @@
 ;;;
 ;;; See LICENSE file for modification and redistribution permissions.
 
+(module abscissa 
+  (window 
+   pdf-file
+   figure
+   axes
+   lines
+   linespoints
+   xy-pairs)
+
+(import scheme chicken)
+(use data-structures)
 (use posix)
 
 (define (interactive win)
@@ -70,3 +81,5 @@
 	  (for-each display-pair pairs)
 	  (display "e" p)
 	  (newline p))))
+
+) ; end module
