@@ -1,0 +1,5 @@
+
+((author "Benjamin Silbaugh")
+ (synopsis "An embedded domain specific language for generating 2D plots")
+ (license "BSD")
+ (files "abscissa.scm" "abscissa.setup"))
