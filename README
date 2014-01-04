@@ -35,8 +35,8 @@ EXAMPLE 2: Multiple Data Sets
 
     (define xy-pairs '((0.10 . 0.20) (0.20 . 0.40) (0.30 . 0.90)))
 
-	(define rs-pairs '((0.10 . 0.20) (0.15 . 0.30) (0.20 . 0.40) 
-	                   (0.25 . 0.75) (0.30 . 0.90) (0.35 . 1.00)))
+    (define rs-pairs '((0.10 . 0.20) (0.15 . 0.30) (0.20 . 0.40) 
+                       (0.25 . 0.75) (0.30 . 0.90) (0.35 . 1.00)))
 
 Then, the following would generate a PDF file of a 2D plot with xy-pairs
 points joined by line segments and rs-pairs points represented by symbols.
@@ -128,9 +128,9 @@ Why a descriptive language?
 
 A descriptive language enables a person to describe the desired graphical
 representation in terms of a given data set. Descriptive languages are
-*static* in nature; i.e. there are verbs. This contrasts with conventional
-plotting API's (and scripting languages) that require a person to
-indirectly specify the desired graphical result by specifying a sequence of
-actions. Conventional API's require a person to think in terms of a
+*static* in nature; i.e. there are no verbs. This contrasts with
+conventional plotting API's (and scripting languages) that require a person
+to indirectly specify the desired graphical result by specifying a sequence
+of actions. Conventional API's require a person to think in terms of a
 *dynamic* process. All other things being equal, it is easier for humans to
 describe what they want rather than how to create it.
