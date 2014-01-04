@@ -1,0 +1,120 @@
+
+                               ~ Abscissa ~
+
+An embedded domain specific language for plotting 2D datasets in Scheme.
+
+Copyright 2014 Benjamin Silbaugh
+
+Overview
+========
+
+Abscissa is a small embedded domain specific language for generating 2D
+plots. The parent lanaguage is Chicken Scheme. Gnuplot is used as the
+underlying plotting engine.
+
+Quick Examples
+==============
+
+Single data sets
+~~~~~~~~~~~~~~~~
+
+EXAMPLE 1: Suppose xy-pairs is a list of x y pairs; e.g
+
+    (define xy-pairs '((0.1 . 0.2) (0.2 . 0.4) (0.3 . 0.9)))
+
+Then, the following would generate a PDF file of a 2D line plot
+
+    (pdf-file (figure (cartesian (lines (data-pairs xy-pairs)))))
+    
+Multiple data sets
+~~~~~~~~~~~~~~~~~~
+
+EXAMPLE 2: Suppose xy-pairs and rs-paris are lists of x y pairs; e.g
+
+    (define xy-pairs '((0.10 . 0.20) (0.20 . 0.40) (0.30 . 0.90)))
+
+	(define rs-pairs '((0.10 . 0.20) (0.15 . 0.30) (0.20 . 0.40) 
+	                   (0.25 . 0.75) (0.30 . 0.90) (0.35 . 1.00)))
+
+Then, the following would generate a PDF file of a 2D plot with xy-pairs
+points joined by line segments and rs-pairs points represented by symbols.
+    
+    (pdf-file (figure (cartesian (lines xy-pairs) (points rs-points))))
+
+Language Specification
+======================
+
+*This is a work in progress.*
+
+DATA SETS:
+
+    (data-pairs <list of pairs>) => <data set>
+
+    (data-vectors <list of ordinate values> <list of abscissa values>) => <data set>
+
+DATA SET GRAPHICAL REPRESENTATION:
+
+    (lines <data set>) => <data graphic>
+
+    (points <data set>) => <data graphic>
+
+    (lines-points <data set>) => <data graphic>
+
+AXES:
+
+    (cartesian <data graphic> ...) => <axes>
+
+    (polar <data graphic> ...) => <axes>
+
+FIGURES:
+
+     (figure <axes> ...) => <figure graphic>
+
+RENDERING:
+
+    (pdf-file <figure graphic>) => generates PDF file
+
+    (svg-file <figure graphic>) => generates SVG file
+
+    (png-file <figure graphic>) => generates png file
+
+    (window <figure graphic>) => sends graphic to display window    
+
+Misc Questions and Answers
+==========================
+
+Why yet another plotting library?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I was interested in using Scheme for some data processing tasks, and I
+couldn't find a plotting package that I liked. Plus, this provides an
+opportunity to sharpen my Scheme programming skills and learn a little
+about language design.
+
+Why use Gnuplot?
+~~~~~~~~~~~~~~~~
+
+The main reasons are:
+
+* I'm already familiar with it.
+
+* It is readily available.
+
+* It is easy to wrap (using pipes).
+
+* It can be used to generate decent looking plots.
+
+That said, there may be some better alternatives out there. (I'm open to
+suggestions.)
+
+Why a descriptive language?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A descriptive language enables a person to describe the desired graphical
+representation in terms of a given data set. Descriptive languages are
+*static* in nature; i.e. there are verbs. This contrasts with conventional
+plotting API's (and scripting languages) that require a person to
+indirectly specify the desired graphical result by specifying a sequence of
+actions. Conventional API's require a person to think in terms of a
+*dynamic* process. All other things being equal, it is easier for humans to
+describe what they want rather than how to create it.
