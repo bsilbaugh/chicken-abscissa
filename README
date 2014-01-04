@@ -14,24 +14,24 @@ Abscissa is a small embedded domain specific language for generating 2D
 plots. The parent language is Chicken Scheme. Gnuplot is used as the
 underlying plotting engine.
 
-Quick Examples
-==============
+Example Usage
+~~~~~~~~~~~~~
 
-Single data sets
-~~~~~~~~~~~~~~~~
+EXAMPLE 1: Single Data Set
+--------------------------
 
-EXAMPLE 1: Suppose xy-pairs is a list of x y pairs; e.g
+Suppose xy-pairs is a list of x y pairs; e.g
 
     (define xy-pairs '((0.1 . 0.2) (0.2 . 0.4) (0.3 . 0.9)))
 
 Then, the following would generate a PDF file of a 2D line plot
 
     (pdf-file (figure (cartesian (lines (data-pairs xy-pairs)))))
-    
-Multiple data sets
-~~~~~~~~~~~~~~~~~~
 
-EXAMPLE 2: Suppose xy-pairs and rs-pairs are lists of x y pairs; e.g
+EXAMPLE 2: Multiple Data Sets
+-----------------------------
+
+ Suppose xy-pairs and rs-pairs are lists of x y pairs; e.g
 
     (define xy-pairs '((0.10 . 0.20) (0.20 . 0.40) (0.30 . 0.90)))
 
@@ -43,10 +43,24 @@ points joined by line segments and rs-pairs points represented by symbols.
     
     (pdf-file (figure (cartesian (lines xy-pairs) (points rs-points))))
 
+Status
+======
+
+Abscissa currently exists as a rough proof-of-concept. Many breaking
+changes are likely to occur. There may be critical bugs.
+
+Critical missing features:
+
+* Support for multiple data sets
+
+* Configuration of graph properties
+
+
 Language Specification
 ======================
 
-*This is a work in progress.*
+The languge specification is a work in progress, and may be out of
+date/sync with the implementation.
 
 DATA SETS:
 
