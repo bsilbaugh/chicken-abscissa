@@ -8,28 +8,20 @@
 
 (use posix)
 
-(define (gnuplot-run f)
-  (let-values (((in out pid) (process "gnuplot" '())))
-	(f out)
-	pid))
-
-(define (call-with-gnuplot f)
-	(process-signal (gnuplot-run f)))
-
 (define (interactive win)
-  (gnuplot-run win))
+  (call-with-output-pipe "gnuplot -persist" win))
 
 (define (batch file)
-  (call-with-gnuplot file))
+  (call-with-output-pipe "gnuplot" file))
 
 (define (window fig)
   (lambda (p) (fig p)))
 
 (define (pdf-file fig)
   (lambda (p)
-	(display "set term pdfcairo" p)
+	(display "set term pdf" p)
 	(newline p)
-	(display "set output \"test.pdf\"" p)
+	(display "set output \"test.pdf\" " p)
 	(newline p)
 	(fig p)))
 
