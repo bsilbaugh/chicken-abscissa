@@ -1,15 +1,17 @@
 
                                ~ Abscissa ~
 
-An embedded domain specific language for plotting 2D datasets in Scheme.
+An embedded domain specific language for plotting 2D data sets in Scheme.
 
 Copyright 2014 Benjamin Silbaugh
+
+See LICENSE for redistribution and modification permissions.
 
 Overview
 ========
 
 Abscissa is a small embedded domain specific language for generating 2D
-plots. The parent lanaguage is Chicken Scheme. Gnuplot is used as the
+plots. The parent language is Chicken Scheme. Gnuplot is used as the
 underlying plotting engine.
 
 Quick Examples
@@ -29,7 +31,7 @@ Then, the following would generate a PDF file of a 2D line plot
 Multiple data sets
 ~~~~~~~~~~~~~~~~~~
 
-EXAMPLE 2: Suppose xy-pairs and rs-paris are lists of x y pairs; e.g
+EXAMPLE 2: Suppose xy-pairs and rs-pairs are lists of x y pairs; e.g
 
     (define xy-pairs '((0.10 . 0.20) (0.20 . 0.40) (0.30 . 0.90)))
 

@@ -5,6 +5,8 @@
 ;;; Chicken Scheme.
 ;;;
 ;;; Copyright 2014 Benjamin Silbaugh
+;;;
+;;; See LICENSE file for modification and redistribution permissions.
 
 (use posix)
 
