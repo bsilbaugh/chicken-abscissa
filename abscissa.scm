@@ -17,15 +17,17 @@
   (call-with-output-pipe "gnuplot" file))
 
 (define (window fig)
-  (lambda (p) (fig p)))
+  (interactive
+   (lambda (p) (fig p))))
 
 (define (pdf-file fig)
-  (lambda (p)
-	(display "set term pdf" p)
-	(newline p)
-	(display "set output \"test.pdf\" " p)
-	(newline p)
-	(fig p)))
+  (batch
+   (lambda (p)
+	 (display "set term pdf" p)
+	 (newline p)
+	 (display "set output \"test.pdf\" " p)
+	 (newline p)
+	 (fig p))))
 
 (define (figure ax)
   (lambda (p) (ax p)))
