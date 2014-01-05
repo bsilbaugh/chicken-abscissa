@@ -41,7 +41,8 @@ EXAMPLE 2: Multiple Data Sets
 Then, the following would generate a PDF file of a 2D plot with xy-pairs
 points joined by line segments and rs-pairs points represented by symbols.
     
-    (pdf-file (figure (cartesian (lines xy-pairs) (points rs-points))))
+    (pdf-file (figure (cartesian (lines  (data-pairs xy-pairs)) 
+                                 (points (data-pairs rs-points)))))
 
 Status
 ======
