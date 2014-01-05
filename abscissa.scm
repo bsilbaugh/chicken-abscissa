@@ -65,6 +65,11 @@
 	(display "'-' with lines" p))
   (cons with-stmt data-set))
 
+(define (points data-set)
+  (define (with-stmt p)
+	(display "'-' with points" p))
+  (cons with-stmt data-set))
+
 (define (linespoints data-set)
   (define (with-stmt p)
 	(display "'-' with linespoints" p))
