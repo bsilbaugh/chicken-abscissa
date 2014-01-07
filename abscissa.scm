@@ -36,7 +36,7 @@
 (define (batch file)
   (call-with-output-pipe "gnuplot" file))
 
-;;; === "Meta" elements ===
+;;; === Primitive Plot Elements ===
 
 (define ((meta-window) fig)
   (interactive
@@ -222,8 +222,7 @@
 	(display-weight p))
   (cons with-stmt data-set))
 
-
-;;; === Plot Elements ===
+;;; === Derived Plot Elements ===
 
 (define window (meta-window))
 
@@ -250,5 +249,20 @@
 	  (for-each display-pair pairs)
 	  (display "e" p)
 	  (newline p))))
+
+;;; === High Level Convenience Functions ===
+
+(define *line-sequence* (list (meta-line #color: "dark-red")
+							  (meta-line #color: "dark-blue")
+							  (meta-line #color: "dark-green")
+							  (meta-line #color: "#500050")
+							  (meta-line #color: "#006969")
+							  (meta-line #color: "dark-yellow")))
+
+;; Plots each sequence of xy pairs in 'data-sets' with lines.
+(define (xy-line-plot #rest data-sets)
+  (window (figure (cartesian (map (lambda (f xy) (f xy)) 
+								  *line-sequence*
+								  data-sets)))))
 
 ) ; end module
