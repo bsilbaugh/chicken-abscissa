@@ -11,14 +11,14 @@
 (module abscissa 
   (meta-window
    meta-pdf-file
-   meta-cartesian-axes
+   meta-cartesian
    meta-lines
    meta-points
    meta-lines-points
    window 
    pdf-file
    figure
-   cartesian-axes
+   cartesian
    lines
    points
    lines-points
@@ -70,10 +70,10 @@
 (define ((meta-figure) ax)
   (lambda (p) (ax p)))
 
-(define ((meta-cartesian-axes #!key 
-							  (x-label #f)
-							  (y-label #f)
-							  (major-grid #f)) . cases)
+(define ((meta-cartesian #!key 
+						 (x-label #f)
+						 (y-label #f)
+						 (major-grid #f)) . cases)
   (define (display-comma p)
 	(display ", " p))
   (define (display-label cmd-str label p)
@@ -231,7 +231,7 @@
 
 (define figure (meta-figure))
 
-(define cartesian-axes (meta-cartesian-axes))
+(define cartesian (meta-cartesian))
 
 (define lines (meta-lines))
 
