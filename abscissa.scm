@@ -92,7 +92,7 @@
 	(cond ((eq? '-- major-grid)
 		   (display "set grid linestyle 0" p))
 		  ((eq? '- major-grid)
-		   (display "set grid linestyle -1" p))
+		   (display "set grid linestyle -1 lc rgb \"grey\"" p))
 		  ((fixnum? major-grid)
 		   (display "set grid linestyle " p)
 		   (display (number->string major-grid) p)))
