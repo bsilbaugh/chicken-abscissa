@@ -11,10 +11,12 @@
 (module abscissa 
   (meta-window
    meta-pdf-file
+   meta-figure
    meta-cartesian
    meta-lines
    meta-points
    meta-lines-points
+   meta-data-pairs
    window 
    pdf-file
    figure
@@ -154,11 +156,17 @@
 	(display weight p)
 	(display " " p))
   (define (with-stmt p)
-	(display "'-' with lines " p)
+	(display "with lines " p)
 	(display-style p)
 	(display-color p)
 	(display-weight p))
-  (cons with-stmt data-set))
+  (define title-stmt (car data-set))
+  (define display-data (cdr data-set))
+  (define (display-cmds p)
+	(display "'-' " p)
+	(title-stmt p)
+	(with-stmt p))
+  (cons display-cmds display-data))
 
 (define ((meta-points #!key 
 					  (style 'o) 
@@ -186,11 +194,17 @@
 	(display weight p)
 	(display #\space p))
   (define (with-stmt p)
-	(display "'-' with points " p)
+	(display "with points " p)
 	(display-style p)
 	(display-color p)
 	(display-weight p))
-  (cons with-stmt data-set))
+  (define title-stmt (car data-set))
+  (define display-data (cdr data-set))
+  (define (display-cmds p)
+	(display "'-' " p)
+	(title-stmt p)
+	(with-stmt p))
+  (cons display-cmds display-data))
 
 (define ((meta-lines-points #!key 
 							(style 'o-)
@@ -234,12 +248,37 @@
 	(display weight p)
 	(display #\space p))
   (define (with-stmt p)
-	(display "'-' with linespoints " p)
+	(display "with linespoints " p)
 	(display-lines-type p)
 	(display-point-type p)
 	(display-color p)
 	(display-weight p))
-  (cons with-stmt data-set))
+  (define title-stmt (car data-set))
+  (define display-data (cdr data-set))
+  (define (display-cmds p)
+	(display "'-' " p)
+	(title-stmt p)
+	(with-stmt p))
+  (cons display-cmds display-data))
+
+(define ((meta-data-pairs #!key (label "NONE")) pairs)
+  (define (display-title p)
+	(display "title " p)
+	(display #\" p)
+	(display label p)
+	(display #\" p)
+	(display #\space p))
+   (define (display-data p)
+	 (letrec ((display-pair
+			   (lambda (xy)
+				 (display (car xy) p)
+				 (display " " p)
+				 (display (cdr xy) p)
+				 (newline p))))
+	   (for-each display-pair pairs)
+	   (display "e" p)
+	   (newline p)))
+   (cons display-title display-data))
 
 ;;; === Plot Elements ===
 
@@ -257,17 +296,7 @@
 
 (define lines-points (meta-lines-points))
 
-(define (data-pairs pairs)
-  (lambda (p)
-	(letrec ((display-pair
-			  (lambda (xy)
-				(display (car xy) p)
-				(display " " p)
-				(display (cdr xy) p)
-				(newline p))))
-	  (for-each display-pair pairs)
-	  (display "e" p)
-	  (newline p))))
+(define data-pairs (meta-data-pairs))
 
 ;;; === High Level Convenience Functions ===
 
