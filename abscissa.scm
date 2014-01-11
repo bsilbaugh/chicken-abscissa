@@ -170,7 +170,7 @@
 	(with-stmt p))
   (cons display-cmds display-data))
 
-(define ((meta-points #!key 
+(define ((meta-symbols #!key 
 					  (style 'o) 
 					  (color *blue*) 
 					  (weight 1)) data-set)
@@ -208,7 +208,7 @@
 	(with-stmt p))
   (cons display-cmds display-data))
 
-(define ((meta-lines-points #!key 
+(define ((meta-lines-symbols #!key 
 							(style 'o-)
 							(color *blue*) 
 							(weight 1)) data-set)
@@ -308,7 +308,7 @@
 
 (define lines (meta-lines))
 
-(define points (meta-points))
+(define symbols (meta-symbols))
 
 (define data-pairs (meta-data-pairs))
 
