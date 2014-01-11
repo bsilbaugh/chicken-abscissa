@@ -234,7 +234,7 @@
 	(display-weight p))
   (cons with-stmt data-set))
 
-;;; === Plot Primitives ===
+;;; === Plot Elements ===
 
 (define *default-color-seq*
   (list *red*
@@ -298,16 +298,18 @@
 
 ;;; === High Level Convenience Functions ===
 
+;; helper function for building various style xy-plots
+(define (xy-plot style xy-pairs)
+  (window (figure (apply cartesian 
+						 (map (lambda (xy) (style (data-pairs xy))) 
+							  xy-pairs)))))
+
 ;; Useful for generating quick-n-dirty line plots of xy data
 (define (xy-line-plot #!rest xy-pairs)
-  (window (figure (apply cartesian 
-						 (map (lambda (xy) (lines (data-pairs xy))) 
-							  xy-pairs)))))
+  (xy-plot lines xy-pairs))
 
 ;; Useful for generating quick-n-dirty scatter plots of xy data
 (define (xy-scatter-plot #!rest xy-pairs)
-  (window (figure (apply cartesian 
-						 (map (lambda (xy) (points (data-pairs xy))) 
-							  xy-pairs)))))
+  (xy-plot points xy-pairs))
 
 ) ; end module
