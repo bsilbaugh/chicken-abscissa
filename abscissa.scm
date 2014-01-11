@@ -79,8 +79,15 @@
 	 (newline p)
 	 (fig p))))
 
-(define ((meta-figure) ax)
-  (lambda (p) (ax p)))
+(define ((meta-figure #!key (show-legend #f)) ax)
+  (define (display-legend p)
+	(if (not show-legend)
+		(begin
+		  (display "unset key" p)
+		  (newline p))))
+  (lambda (p)
+	(display-legend p)
+	(ax p)))
 
 (define ((meta-cartesian #!key 
 						 (x-label #f)
@@ -266,7 +273,7 @@
 
 ;; helper function for building various style xy-plots
 (define (xy-plot style-seq xy-pairs)
-  (window (figure (apply cartesian 
+  (window (figure (apply (meta-cartesian major-grid: '--)
 						 (map (lambda (style xy) (style (data-pairs xy))) 
 							  style-seq xy-pairs)))))
 
