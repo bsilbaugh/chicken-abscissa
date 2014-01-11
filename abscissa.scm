@@ -296,8 +296,6 @@
 
 (define points (meta-points))
 
-(define lines-points (meta-lines-points))
-
 (define data-pairs (meta-data-pairs))
 
 ;;; === High Level Convenience Functions ===
