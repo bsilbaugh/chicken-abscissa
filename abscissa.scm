@@ -24,7 +24,8 @@
    lines
    points
    lines-points
-   data-pairs
+   <-pairs
+   <-lists
    xy-line-plot
    xy-scatter-plot)
 
