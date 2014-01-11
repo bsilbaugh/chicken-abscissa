@@ -27,6 +27,16 @@
 (import scheme chicken)
 (use data-structures)
 (use posix)
+(use srfi-1)
+
+;;; === Colors ===
+
+(define *red*     "dark-red") 
+(define *blue*    "dark-blue")
+(define *green*   "dark-green")
+(define *magenta* "#500050")
+(define *cyan*    "#006969")
+(define *yellow*  "dark-yellow")
 
 ;;; === helpers ===
 
@@ -175,7 +185,7 @@
 
 (define ((meta-lines-points #!key 
 							(style 'o-)
-							(color "dark-blue") 
+							(color *blue*) 
 							(weight 1)) data-set)
   (define (line-type style)
 	(cond ((or (eq? 'o- style)
@@ -224,6 +234,40 @@
 
 ;;; === Plot Primitives ===
 
+(define *default-color-seq*
+  (list *red*
+		*blue*
+		*green*
+		*magenta*
+		*cyan*
+		*yellow*))
+
+(define *default-lines-clist*
+  (apply circular-list 
+		 (map (lambda (c) (meta-lines color: c)) *default-color-seq*)))
+
+(define *default-points-clist*
+  (apply circular-list
+		 (map (lambda (c ps) (meta-points style: ps color: c)) 
+			  *default-color-seq*
+			  '(o + x s d t))))
+
+(define *default-lines-points-clist*
+  (apply circular-list
+		 (map (lambda (c ps) (meta-lines-points style: ps color: c))
+			  *default-color-seq*
+			  '(o- +- x- s- d- t-))))
+
+(define-syntax define-cyclic
+  (er-macro-transformer
+   (lambda (exp rename compare)
+	 (let ((name (cadr exp))
+		   (fun-seq (caddr exp)))
+	   `(define ,name (lambda args
+						(let ((x (car ,fun-seq)))
+						  (set! ,fun-seq (cdr ,fun-seq))
+						  (apply x args))))))))
+
 (define window (meta-window))
 
 (define pdf-file (meta-pdf-file))
@@ -232,11 +276,11 @@
 
 (define cartesian (meta-cartesian))
 
-(define lines (meta-lines))
+(define-cyclic lines *default-lines-clist*)
 
-(define points (meta-points))
+(define-cyclic points *default-points-clist*)
 
-(define lines-points (meta-lines-points))
+(define-cyclic lines-points *default-lines-points-clist*)
 
 (define (data-pairs pairs)
   (lambda (p)
@@ -251,18 +295,5 @@
 	  (newline p))))
 
 ;;; === High Level Convenience Functions ===
-
-(define *line-sequence* (list (meta-line #color: "dark-red")
-							  (meta-line #color: "dark-blue")
-							  (meta-line #color: "dark-green")
-							  (meta-line #color: "#500050")
-							  (meta-line #color: "#006969")
-							  (meta-line #color: "dark-yellow")))
-
-;; Plots each sequence of xy pairs in 'data-sets' with lines.
-(define (xy-line-plot #rest data-sets)
-  (window (figure (cartesian (map (lambda (f xy) (f xy)) 
-								  *line-sequence*
-								  data-sets)))))
 
 ) ; end module
