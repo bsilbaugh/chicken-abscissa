@@ -16,7 +16,8 @@
    meta-lines
    meta-points
    meta-lines-points
-   meta-data-pairs
+   <-meta-pairs
+   <-meta-lists
    window 
    pdf-file
    figure
@@ -263,7 +264,7 @@
 	(with-stmt p))
   (cons display-cmds display-data))
 
-(define ((<-meta-data display-data label) pairs)
+(define (<-meta-data display-data label)
   (define (display-title p)
 	(display "title " p)
 	(display #\" p)
@@ -319,7 +320,7 @@
 ;; helper function for building various style xy-plots
 (define (xy-plot style-seq xy-pairs)
   (window (figure (apply (meta-cartesian major-grid: '--)
-						 (map (lambda (style xy) (style (data-pairs xy))) 
+						 (map (lambda (style xy) (style (<-pairs xy))) 
 							  style-seq xy-pairs)))))
 
 ;; Useful for generating quick-n-dirty line plots of xy data
