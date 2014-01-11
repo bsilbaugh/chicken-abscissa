@@ -23,7 +23,6 @@
    cartesian
    lines
    points
-   lines-points
    <-pairs
    <-lists
    xy-line-plot
