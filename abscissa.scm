@@ -125,7 +125,7 @@
 
 (define ((meta-lines #!key 
 					 (style '-) 
-					 (color "dark-blue") 
+					 (color *blue*) 
 					 (weight 1)) data-set)
   (define (line-style s)
 	(cond ((eq? '-  style) -1) ; solid line
@@ -155,7 +155,7 @@
 
 (define ((meta-points #!key 
 					  (style 'o) 
-					  (color "dark-blue") 
+					  (color *blue*) 
 					  (weight 1)) data-set)
   (define (line-type style)
 	(cond ((eq? 'o style) 32)
