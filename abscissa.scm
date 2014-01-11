@@ -22,7 +22,9 @@
    lines
    points
    lines-points
-   data-pairs)
+   data-pairs
+   xy-line-plot
+   xy-scatter-plot)
 
 (import scheme chicken)
 (use data-structures)
@@ -295,5 +297,17 @@
 	  (newline p))))
 
 ;;; === High Level Convenience Functions ===
+
+;; Useful for generating quick-n-dirty line plots of xy data
+(define (xy-line-plot #!rest xy-pairs)
+  (window (figure (apply cartesian 
+						 (map (lambda (xy) (lines (data-pairs xy))) 
+							  xy-pairs)))))
+
+;; Useful for generating quick-n-dirty scatter plots of xy data
+(define (xy-scatter-plot #!rest xy-pairs)
+  (window (figure (apply cartesian 
+						 (map (lambda (xy) (points (data-pairs xy))) 
+							  xy-pairs)))))
 
 ) ; end module
