@@ -35,6 +35,8 @@
 
 ;;; === Colors ===
 
+(define *black*   "black")
+(define *grey*    "grey")
 (define *red*     "dark-red") 
 (define *blue*    "dark-blue")
 (define *green*   "dark-green")
