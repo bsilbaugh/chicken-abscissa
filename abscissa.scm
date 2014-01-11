@@ -236,40 +236,6 @@
 
 ;;; === Plot Elements ===
 
-(define *default-color-seq*
-  (list *red*
-		*blue*
-		*green*
-		*magenta*
-		*cyan*
-		*yellow*))
-
-(define *default-lines-clist*
-  (apply circular-list 
-		 (map (lambda (c) (meta-lines color: c)) *default-color-seq*)))
-
-(define *default-points-clist*
-  (apply circular-list
-		 (map (lambda (c ps) (meta-points style: ps color: c)) 
-			  *default-color-seq*
-			  '(o + x s d t))))
-
-(define *default-lines-points-clist*
-  (apply circular-list
-		 (map (lambda (c ps) (meta-lines-points style: ps color: c))
-			  *default-color-seq*
-			  '(o- +- x- s- d- t-))))
-
-(define-syntax define-cyclic
-  (er-macro-transformer
-   (lambda (exp rename compare)
-	 (let ((name (cadr exp))
-		   (fun-seq (caddr exp)))
-	   `(define ,name (lambda args
-						(let ((x (car ,fun-seq)))
-						  (set! ,fun-seq (cdr ,fun-seq))
-						  (apply x args))))))))
-
 (define window (meta-window))
 
 (define pdf-file (meta-pdf-file))
@@ -278,11 +244,11 @@
 
 (define cartesian (meta-cartesian))
 
-(define-cyclic lines *default-lines-clist*)
+(define lines (meta-lines))
 
-(define-cyclic points *default-points-clist*)
+(define points (meta-points))
 
-(define-cyclic lines-points *default-lines-points-clist*)
+(define lines-points (meta-lines-points))
 
 (define (data-pairs pairs)
   (lambda (p)
