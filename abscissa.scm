@@ -263,13 +263,16 @@
 	(with-stmt p))
   (cons display-cmds display-data))
 
-(define ((meta-data-pairs #!key (label "NONE")) pairs)
+(define ((meta-data display-data label) pairs)
   (define (display-title p)
 	(display "title " p)
 	(display #\" p)
 	(display label p)
 	(display #\" p)
 	(display #\space p))
+   (cons display-title display-data))
+
+(define ((meta-data-pairs #!key (label "NONE")) pairs)
    (define (display-data p)
 	 (letrec ((display-pair
 			   (lambda (xy)
@@ -280,7 +283,18 @@
 	   (for-each display-pair pairs)
 	   (display "e" p)
 	   (newline p)))
-   (cons display-title display-data))
+   (meta-data display-data label))
+
+(define ((meta-data-lists #!key (label "NONE")) x y)
+  (define (display-data p)
+	(for-each (lambda (xi yi)
+				(display xi p)
+				(display #\space p)
+				(display yi p)
+				(newline p)) x y)
+	(display "e" p)
+	(newline p))
+  (meta-data display-data label))
 
 ;;; === Plot Elements ===
 
