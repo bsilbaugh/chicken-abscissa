@@ -265,17 +265,30 @@
 ;;; === High Level Convenience Functions ===
 
 ;; helper function for building various style xy-plots
-(define (xy-plot style xy-pairs)
+(define (xy-plot style-seq xy-pairs)
   (window (figure (apply cartesian 
-						 (map (lambda (xy) (style (data-pairs xy))) 
-							  xy-pairs)))))
+						 (map (lambda (style xy) (style (data-pairs xy))) 
+							  style-seq xy-pairs)))))
 
 ;; Useful for generating quick-n-dirty line plots of xy data
 (define (xy-line-plot #!rest xy-pairs)
-  (xy-plot lines xy-pairs))
+  (xy-plot (circular-list 
+			(meta-lines color: *red*)
+			(meta-lines color: *blue*)
+			(meta-lines color: *green*)
+			(meta-lines color: *cyan*)
+			(meta-lines color: *magenta*))
+		   xy-pairs))
 
 ;; Useful for generating quick-n-dirty scatter plots of xy data
 (define (xy-scatter-plot #!rest xy-pairs)
-  (xy-plot points xy-pairs))
+  (xy-plot (circular-list
+			(meta-points style: 'o color: *red*)
+			(meta-points style: '+ color: *blue*)
+			(meta-points style: 'x color: *green*)
+			(meta-points style: 's color: *cyan*)
+			(meta-points style: 't color: *magenta*)
+			(meta-points style: 'd color: *yellow*))
+		   xy-pairs))
 
 ) ; end module
