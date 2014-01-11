@@ -36,7 +36,7 @@
 (define (batch file)
   (call-with-output-pipe "gnuplot" file))
 
-;;; === Primitive Plot Elements ===
+;;; === Plot "Meta" Elements ===
 
 (define ((meta-window) fig)
   (interactive
@@ -222,7 +222,7 @@
 	(display-weight p))
   (cons with-stmt data-set))
 
-;;; === Derived Plot Elements ===
+;;; === Plot Primitives ===
 
 (define window (meta-window))
 
