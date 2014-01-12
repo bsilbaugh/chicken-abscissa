@@ -22,6 +22,9 @@
 ;; Declare a window containing a single figure, with Cartesian axes, and a
 ;; curve formed by patching together line segments ("lines") whose end points
 ;; coincide with the points defined by the sample set.
-(window (figure (cartesian (lines (<-sample- sin (linspace -3.14 3.14 0.01))))))
+([window] 
+ ([figure] 
+  ([cartesian] 
+   ([lines] (<-sample- sin (linspace -3.14 3.14 0.01))))))
 
 

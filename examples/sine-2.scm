@@ -20,26 +20,19 @@
 ;; Import the abscissa module
 (use abscissa)
 
-;; Set the name of the pdf output file.  We need to "extend the plotting
-;; language" by creating a custom pdf object, as the default pdf-file
-;; object will use a default file name of "abscissa-plot.pdf". (This would
-;; still work, but we want to have better control over the file name for
-;; this example.) We'll do this by using the meta-pdf-file object.
-(define pdf (meta-pdf-file name: "sine-2.pdf"))
-
-;; Create custom cartesian axes object with x and y limits set to
-;; [-3.15,3.15] and [-1,1], respectively, axes x and y labeld "x" and "y",
-;; respectively, and solid major grid lines.
-(define axes (meta-cartesian x-limits: '(-3.15 . 3.15)
-							 y-limits: '(-1.0 . 1.0)
-							 x-label: "x"
-							 y-label: "y"
-							 major-grid: '-))
-
-;; Define sample sites
+;; Declare samples
 (define x (linspace -3.2 3.2 0.01))
 
-;; Declare a window containing a single figure, with Cartesian axes, and a
-;; curve formed by patching together line segments ("lines") whose end points
-;; coincide with the points defined by the sample set.
-(pdf (figure (axes (lines (<-sample- sin x)))))
+;; Declare a PDF named sine-2.pdf containging a single figure with
+;; cartesian axes containing a single line plot of the sine function.  The
+;; axes limits are declared to be [3.5,3.5] X [-1.5,1.5]. The axes
+;; coordinate labels are declared to be "x" and "y". The axes major grid
+;; lines are declared to be solid lines.
+([pdf name: "sine-2.pdf"] 
+ ([figure] 
+  ([cartesian x-label: "x"
+			  y-label: "y"
+			  x-limits: '(-3.5 . 3.5)
+			  y-limits: '(-1.5 . 1.5)
+			  major-grid: '- ]
+   ([lines] (<-sample- sin x)))))

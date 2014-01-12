@@ -19,16 +19,12 @@
 ;; Import the abscissa module
 (use abscissa)
 
-;; Set the name of the pdf output file.  We need to "extend the plotting
-;; language" by creating a custom pdf object, as the default pdf-file
-;; object will use a default file name of "abscissa-plot.pdf". (This would
-;; still work, but we want to have better control over the file name for
-;; this example.) We'll do this by using the meta-pdf-file object.
-(define pdf (meta-pdf-file name: "sine.pdf"))
-
 ;; Declare a window containing a single figure, with Cartesian axes, and a
 ;; curve formed by patching together line segments ("lines") whose end points
 ;; coincide with the points defined by the sample set.
-(pdf (figure (cartesian (lines (<-sample- sin (linspace -3.14 3.14 0.01))))))
+([pdf name: "sine.pdf"] 
+ ([figure] 
+  ([cartesian] 
+   ([lines] (<-sample- sin (linspace -3.14 3.14 0.01))))))
 
 
