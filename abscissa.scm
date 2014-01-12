@@ -68,7 +68,7 @@
 (define ((meta-pdf-file #!key 
 						(width 5.0) 
 						(height 3.0) 
-						(file-name "abscissa-plot.pdf")) fig)
+						(name "abscissa-plot.pdf")) fig)
   (define (display-size p)
 	(display "size " p)
 	(display width p)
@@ -77,7 +77,7 @@
 	(display " " p))
   (define (display-file-name p)
 	(display #\" p)
-	(display file-name p)
+	(display name p)
 	(display #\" p)
 	(display " " p))
   (batch
