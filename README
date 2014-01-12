@@ -51,7 +51,7 @@ represented by lines and pq values represented by symbols
      ([figure]
       ([cartesian]
        ([line] (<- xy))
-	   ([points] (<- pq)))))
+       ([points] (<- pq)))))
 
 Example 3: Configuring Plot Elements
 ------------------------------------
