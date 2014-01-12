@@ -86,7 +86,10 @@
 
 (define ((meta-figure #!key (show-legend #f)) ax)
   (define (display-legend p)
-	(if (not show-legend)
+	(if show-legend
+		(begin
+		  (display "set key rmargin top vertical Left reverse" p)
+		  (newline p))
 		(begin
 		  (display "unset key" p)
 		  (newline p))))
