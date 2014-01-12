@@ -322,9 +322,17 @@
 
 ;; helper function for building various style xy-plots
 (define (xy-plot style-seq xy-pairs)
-  (window (figure (apply (meta-cartesian major-grid: '--)
-						 (map (lambda (style xy) (style (<- xy))) 
-							  style-seq xy-pairs)))))
+  (define (labels xy-pairs i)
+	(if (null? xy-pairs)
+		'()
+		(cons (string-append "case " (number->string i))
+			  (labels (cdr xy-pairs) (+ i 1)))))
+  (window
+   ((meta-figure show-legend: #t)
+	(apply (meta-cartesian major-grid: '--)
+		   (map (lambda (style label xy)
+				  (style ((<-meta label: label) xy)))
+				style-seq (labels xy-pairs 1) xy-pairs)))))
 
 ;; Useful for generating quick-n-dirty line plots of xy data
 (define (xy-line-plot #!rest xy-pairs)
