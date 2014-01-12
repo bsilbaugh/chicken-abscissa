@@ -9,28 +9,16 @@
 ;;; See LICENSE file for modification and redistribution permissions.
 
 (module abscissa 
-  (;; === "meta" functions ===
-   meta-window
-   meta-pdf-file
-   meta-figure
-   meta-cartesian
-   meta-lines
-   meta-points
-   meta-lines-points
-   <-meta
-   <-meta-zip-
-   <-meta-sample-
-   ;; === plot elements ===
-   window 
-   pdf-file
+  (window
+   pdf
    figure
    cartesian
    lines
    points
+   lines-points
    <-
    <-zip-
    <-sample-
-   ;; === convienance functions ===
    linspace)
 
 (import scheme chicken)
@@ -57,16 +45,16 @@
 (define (batch file)
   (call-with-output-pipe "gnuplot" file))
 
-;;; === Plot "Meta" Elements ===
+;;; === Plot Elements ===
 
-(define ((meta-window) fig)
+(define ((window) fig)
   (interactive
    (lambda (p) (fig p))))
 
-(define ((meta-pdf-file #!key 
-						(width 5.0) 
-						(height 3.0) 
-						(name "abscissa-plot.pdf")) fig)
+(define ((pdf #!key 
+			  (width 5.0) 
+			  (height 3.0) 
+			  (name "abscissa-plot.pdf")) fig)
   (define (display-size p)
 	(display "size " p)
 	(display width p)
@@ -88,7 +76,7 @@
 	 (newline p)
 	 (fig p))))
 
-(define ((meta-figure #!key (show-legend #f)) ax)
+(define ((figure #!key (show-legend #f)) ax)
   (define (display-legend p)
 	(if show-legend
 		(begin
@@ -101,12 +89,12 @@
 	(display-legend p)
 	(ax p)))
 
-(define ((meta-cartesian #!key 
-						 (x-limits #f)
-						 (y-limits #f)
-						 (x-label #f)
-						 (y-label #f)
-						 (major-grid #f)) . cases)
+(define ((cartesian #!key 
+					(x-limits #f)
+					(y-limits #f)
+					(x-label #f)
+					(y-label #f)
+					(major-grid #f)) . cases)
   (define (display-comma p)
 	(display ", " p))
   (define (display-limits cmd-str ab p)
@@ -160,10 +148,10 @@
 ; TODO
 ; (define ((meta-polar-axes) . cases))
 
-(define ((meta-lines #!key 
-					 (style '-) 
-					 (color *blue*) 
-					 (weight 1)) data-set)
+(define ((lines #!key 
+				(style '-) 
+				(color *blue*) 
+				(weight 1)) data-set)
   (define (line-style s)
 	(cond ((eq? '-  style) -1) ; solid line
 		  ((eq? '-- style) 0) ; dashed line
@@ -196,10 +184,10 @@
 	(with-stmt p))
   (cons display-cmds display-data))
 
-(define ((meta-points #!key 
-					  (style 'o) 
-					  (color *blue*) 
-					  (weight 1)) data-set)
+(define ((points #!key 
+				 (style 'o) 
+				 (color *blue*) 
+				 (weight 1)) data-set)
   (define (line-type style)
 	(cond ((eq? 'o style) 32)
 		  ((eq? '+ style) 27)
@@ -234,10 +222,10 @@
 	(with-stmt p))
   (cons display-cmds display-data))
 
-(define ((meta-lines-points #!key 
-							(style 'o-)
-							(color *blue*) 
-							(weight 1)) data-set)
+(define ((lines-points #!key 
+					   (style 'o-)
+					   (color *blue*) 
+					   (weight 1)) data-set)
   (define (line-type style)
 	(cond ((or (eq? 'o- style)
 			   (eq? '+- style)
@@ -289,7 +277,7 @@
 	(with-stmt p))
   (cons display-cmds display-data))
 
-(define (<-meta-data display-data label)
+(define (<-data display-data label)
   (define (display-title p)
 	(display "title " p)
 	(display #\" p)
@@ -298,7 +286,7 @@
 	(display #\space p))
    (cons display-title display-data))
 
-(define ((<-meta #!key (label "NONE")) pairs)
+(define ((<- #!key (label "NONE")) pairs)
    (define (display-data p)
 	 (letrec ((display-pair
 			   (lambda (xy)
@@ -309,9 +297,9 @@
 	   (for-each display-pair pairs)
 	   (display "e" p)
 	   (newline p)))
-   (<-meta-data display-data label))
+   (<-data display-data label))
 
-(define ((<-meta-zip- #!key (label "NONE")) x y)
+(define ((<-zip- #!key (label "NONE")) x y)
   (define (display-data p)
 	(for-each (lambda (xi yi)
 				(display xi p)
@@ -320,36 +308,16 @@
 				(newline p)) x y)
 	(display "e" p)
 	(newline p))
-  (<-meta-data display-data label))
+  (<-data display-data label))
 
-(define ((<-meta-sample- #!key (label "NONE")) f x)
+(define ((<-sample- #!key (label "NONE")) f x)
   (define (display-data p)
 	(for-each (lambda (xi)
 				(display xi p)
 				(display #\space p)
 				(display (f xi) p)
 				(newline p)) x))
-  (<-meta-data display-data label))
-
-;;; === Plot Elements ===
-
-(define window (meta-window))
-
-(define pdf-file (meta-pdf-file))
-
-(define figure (meta-figure))
-
-(define cartesian (meta-cartesian))
-
-(define lines (meta-lines))
-
-(define points (meta-points))
-
-(define <- (<-meta))
-
-(define <-zip- (<-meta-zip-))
-
-(define <-sample- (<-meta-sample-))
+  (<-data display-data label))
 
 ;;; === Convenience Functions ===
 
