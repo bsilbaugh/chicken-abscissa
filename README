@@ -37,8 +37,8 @@ plot of xy
 Note that the indentation used above is not significant: it is only used 
 for readability.
 
-Example 2: Multiple data set
-----------------------------
+Example 2: Multiple data sets
+-----------------------------
 
 Suppose xy and pq are lists of pairs; e.g.
 
