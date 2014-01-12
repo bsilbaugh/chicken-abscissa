@@ -15,7 +15,9 @@ embedded in Chicken Scheme. Gnuplot is used as the plotting engine.
 
 Example Usage
 ~~~~~~~~~~~~~
-Also see the examples directory for more examples.
+
+The following examples should provide a basic sense of how Abscissa is
+used. For more examples, see the examples directory in the source tree. 
 
 Example 1: Single data set
 --------------------------
