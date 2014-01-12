@@ -26,7 +26,7 @@ Suppose xy-pairs is a list of x y pairs; e.g
 
 Then, the following would generate a PDF file of a 2D line plot
 
-    (pdf-file (figure (cartesian (lines (data-pairs xy-pairs)))))
+    (pdf-file (figure (cartesian (lines (<- xy-pairs)))))
 
 EXAMPLE 2: Multiple Data Sets
 -----------------------------
@@ -41,18 +41,14 @@ EXAMPLE 2: Multiple Data Sets
 Then, the following would generate a PDF file of a 2D plot with xy-pairs
 points joined by line segments and rs-pairs points represented by symbols.
     
-    (pdf-file (figure (cartesian (lines  (data-pairs xy-pairs)) 
-                                 (points (data-pairs rs-points)))))
+    (pdf-file (figure (cartesian (lines  (<- xy-pairs)) 
+                                 (points (<- rs-pairs)))))
 
 Status
 ======
 
-Abscissa currently exists as a rough proof-of-concept. Many breaking
-changes are likely to occur. There may be critical bugs.
-
-Critical missing features:
-
-* Configuration of graph properties
+Abscissa is quite usable at this point for basic plotting tasks. However,
+breaking changes may occur, and there may still be critical bugs.
 
 Installation
 ============
@@ -94,37 +90,35 @@ date/sync with the implementation.
 
 DATA SETS:
 
-    (data-pairs <list of pairs>) => <data set>
+    (<- LIST-OF-PAIRS) => DATA-SET
 
-    (data-vectors <list of ordinate values> <list of abscissa values>) => <data set>
+    (<-zip- LIST-OF-ORDINATE-VALUES LIST-OF-ABSCISSA-VALUES) => DATA-SET
 
 DATA SET GRAPHICAL REPRESENTATION:
 
-    (lines <data set>) => <data graphic>
+    (lines DATA-SET) => GRAPHIC-ELEMENT
 
-    (points <data set>) => <data graphic>
-
-    (lines-points <data set>) => <data graphic>
+    (points DATA-SET) => GRAPHIC-ELEMENT
 
 AXES:
 
-    (cartesian <data graphic> ...) => <axes>
+    (cartesian DATA-GRAPHIC ...) => AXES
 
-    (polar <data graphic> ...) => <axes>
+    (polar DATA-GRAPHIC ...) => AXES
 
 FIGURES:
 
-     (figure <axes> ...) => <figure graphic>
+     (figure AXES ...) => FIGURE
 
 RENDERING:
 
-    (pdf-file <figure graphic>) => generates PDF file
+    (pdf-file FIGURE) => generates PDF file
 
-    (svg-file <figure graphic>) => generates SVG file
+    (svg-file FIGURE) => generates SVG file
 
-    (png-file <figure graphic>) => generates png file
+    (png-file FIGURE) => generates png file
 
-    (window <figure graphic>) => sends graphic to display window    
+    (window FIGURE) => sends graphic to display window    
 
 Misc Questions and Answers
 ==========================
