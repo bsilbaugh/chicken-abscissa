@@ -9,7 +9,8 @@
 ;;; See LICENSE file for modification and redistribution permissions.
 
 (module abscissa 
-  (meta-window
+  (;; === "meta" functions ===
+   meta-window
    meta-pdf-file
    meta-figure
    meta-cartesian
@@ -18,6 +19,8 @@
    meta-lines-points
    <-meta
    <-meta-zip-
+   <-meta-sample-
+   ;; === plot elements ===
    window 
    pdf-file
    figure
@@ -26,6 +29,9 @@
    points
    <-
    <-zip-
+   <-sample-
+   ;; === convienance functions ===
+   linspace
    xy-line-plot
    xy-scatter-plot)
 
@@ -318,6 +324,15 @@
 	(newline p))
   (<-meta-data display-data label))
 
+(define ((<-meta-sample- #!key (label "NONE")) f x)
+  (define (display-data p)
+	(for-each (lambda (xi)
+				(display xi p)
+				(display #\space p)
+				(display (f xi) p)
+				(newline p)) x))
+  (<-meta-data display-data label))
+
 ;;; === Plot Elements ===
 
 (define window (meta-window))
@@ -336,7 +351,17 @@
 
 (define <-zip- (<-meta-zip-))
 
+(define <-sample- (<-meta-sample-))
+
 ;;; === High Level Convenience Functions ===
+
+(define (linspace start end inc)
+  (if (< start end)
+	  (cons start (linspace (+ start inc) end inc))
+	  '()))
+
+(define (sample-function f x-vals)
+  (map (lambda (x) (cons x (f x))) x-vals))
 
 ;; helper function for building various style xy-plots
 (define (xy-plot style-seq xy-pairs)
