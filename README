@@ -10,39 +10,10 @@ See LICENSE for redistribution and modification permissions.
 Overview
 ========
 
-Abscissa is a small embedded domain specific language for generating 2D
-plots. The parent language is Chicken Scheme. Gnuplot is used as the
-underlying plotting engine.
-
-Example Usage
-~~~~~~~~~~~~~
-
-EXAMPLE 1: Single Data Set
---------------------------
-
-Suppose xy-pairs is a list of x y pairs; e.g
-
-    (define xy-pairs '((0.1 . 0.2) (0.2 . 0.4) (0.3 . 0.9)))
-
-Then, the following would generate a PDF file of a 2D line plot
-
-    (pdf-file (figure (cartesian (lines (<- xy-pairs)))))
-
-EXAMPLE 2: Multiple Data Sets
------------------------------
-
- Suppose xy-pairs and rs-pairs are lists of x y pairs; e.g
-
-    (define xy-pairs '((0.10 . 0.20) (0.20 . 0.40) (0.30 . 0.90)))
-
-    (define rs-pairs '((0.10 . 0.20) (0.15 . 0.30) (0.20 . 0.40) 
-                       (0.25 . 0.75) (0.30 . 0.90) (0.35 . 1.00)))
-
-Then, the following would generate a PDF file of a 2D plot with xy-pairs
-points joined by line segments and rs-pairs points represented by symbols.
-    
-    (pdf-file (figure (cartesian (lines  (<- xy-pairs)) 
-                                 (points (<- rs-pairs)))))
+Abscissa is a domain specific language for generating 2D plots. Abscissa is
+embedded in Chicken Scheme. Gnuplot is used as the plotting engine. See
+http://bsilbaugh.github.io/chicken-abscissa for more information and
+examples.
 
 Status
 ======
@@ -81,80 +52,3 @@ Latest Development Version
 
   if you're egg repository requires super user privileges. Also see the
   Chicken Scheme User Manual and Wiki for additional installation options.
-
-Language Specification
-======================
-
-The languge specification is a work in progress and may be out of
-date/sync with the implementation.
-
-DATA SETS:
-
-    (<- LIST-OF-PAIRS) => DATA-SET
-
-    (<-zip- LIST-OF-ORDINATE-VALUES LIST-OF-ABSCISSA-VALUES) => DATA-SET
-
-DATA SET GRAPHICAL REPRESENTATION:
-
-    (lines DATA-SET) => GRAPHIC-ELEMENT
-
-    (points DATA-SET) => GRAPHIC-ELEMENT
-
-AXES:
-
-    (cartesian DATA-GRAPHIC ...) => AXES
-
-    (polar DATA-GRAPHIC ...) => AXES
-
-FIGURES:
-
-     (figure AXES ...) => FIGURE
-
-RENDERING:
-
-    (pdf-file FIGURE) => generates PDF file
-
-    (svg-file FIGURE) => generates SVG file
-
-    (png-file FIGURE) => generates png file
-
-    (window FIGURE) => sends graphic to display window    
-
-Misc Questions and Answers
-==========================
-
-Why yet another plotting library?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-I was interested in using Scheme for some data processing tasks, and I
-couldn't find a plotting package that I liked. Plus, this provides an
-opportunity to sharpen my Scheme programming skills and learn a little
-about language design.
-
-Why use Gnuplot?
-~~~~~~~~~~~~~~~~
-
-The main reasons are:
-
-* I'm already familiar with it.
-
-* It is readily available.
-
-* It is easy to wrap (using pipes).
-
-* It can be used to generate decent looking plots.
-
-That said, there may be some better alternatives out there. (I'm open to
-suggestions.)
-
-Why a descriptive language?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A descriptive language enables a person to describe the desired graphical
-representation in terms of a given data set. Descriptive languages are
-*static* in nature; i.e. there are no verbs. This contrasts with
-conventional plotting API's (and scripting languages) that require a person
-to indirectly specify the desired graphical result by specifying a sequence
-of actions. Conventional API's require a person to think in terms of a
-*dynamic* process. All other things being equal, it is easier for humans to
-describe what they want rather than how to create it.
