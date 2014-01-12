@@ -17,7 +17,7 @@
    meta-points
    meta-lines-points
    <-meta
-   <-meta-lists
+   <-meta-zip-
    window 
    pdf-file
    figure
@@ -25,7 +25,7 @@
    lines
    points
    <-
-   <-lists
+   <-zip-
    xy-line-plot
    xy-scatter-plot)
 
@@ -286,7 +286,7 @@
 	   (newline p)))
    (<-meta-data display-data label))
 
-(define ((<-meta-lists #!key (label "NONE")) x y)
+(define ((<-meta-zip- #!key (label "NONE")) x y)
   (define (display-data p)
 	(for-each (lambda (xi yi)
 				(display xi p)
@@ -313,7 +313,7 @@
 
 (define <- (<-meta))
 
-(define <-lists (<-meta-lists))
+(define <-zip- (<-meta-zip-))
 
 ;;; === High Level Convenience Functions ===
 
