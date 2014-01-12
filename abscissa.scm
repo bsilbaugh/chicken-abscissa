@@ -320,7 +320,7 @@
 ;; helper function for building various style xy-plots
 (define (xy-plot style-seq xy-pairs)
   (window (figure (apply (meta-cartesian major-grid: '--)
-						 (map (lambda (style xy) (style (<-pairs xy))) 
+						 (map (lambda (style xy) (style (<- xy))) 
 							  style-seq xy-pairs)))))
 
 ;; Useful for generating quick-n-dirty line plots of xy data
