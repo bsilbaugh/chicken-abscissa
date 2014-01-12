@@ -16,7 +16,7 @@
    meta-lines
    meta-points
    meta-lines-points
-   <-meta-pairs
+   <-meta
    <-meta-lists
    window 
    pdf-file
@@ -24,7 +24,7 @@
    cartesian
    lines
    points
-   <-pairs
+   <-
    <-lists
    xy-line-plot
    xy-scatter-plot)
@@ -273,7 +273,7 @@
 	(display #\space p))
    (cons display-title display-data))
 
-(define ((<-meta-pairs #!key (label "NONE")) pairs)
+(define ((<-meta #!key (label "NONE")) pairs)
    (define (display-data p)
 	 (letrec ((display-pair
 			   (lambda (xy)
@@ -311,7 +311,7 @@
 
 (define points (meta-points))
 
-(define <-pairs (<-meta-pairs))
+(define <- (<-meta))
 
 (define <-lists (<-meta-lists))
 
