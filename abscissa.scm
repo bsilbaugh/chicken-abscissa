@@ -98,11 +98,23 @@
 	(ax p)))
 
 (define ((meta-cartesian #!key 
+						 (x-range #f)
+						 (y-range #f)
 						 (x-label #f)
 						 (y-label #f)
 						 (major-grid #f)) . cases)
   (define (display-comma p)
 	(display ", " p))
+  (define (display-range cmd-str ab p)
+	(if ab
+		(begin
+		  (display cmd-str p)
+		  (display "[" p)
+		  (display (car ab) p)
+		  (display ":" p)
+		  (display (cdr ab) p)
+		  (display "]" p)
+		  (newline p))))
   (define (display-label cmd-str label p)
 	(if label
 		(begin
@@ -111,6 +123,10 @@
 		  (display label p)
 		  (display #\" p)
 		  (newline p))))
+  (define (display-x-range p)
+	(display-range "set xrange " x-range p))
+  (define (display-y-range p)
+	(display-range "set yrange " y-range p))
   (define (display-x-label p)
 	(display-label "set xlabel " x-label p))
   (define (display-y-label p)
@@ -128,6 +144,8 @@
 		(data-stmts (map cdr cases)))
 	(lambda (p)
 	  (display-grid p)
+	  (display-x-range p)
+	  (display-y-range p)
 	  (display-x-label p)
 	  (display-y-label p)
 	  (display "plot " p)
