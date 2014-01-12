@@ -1,6 +1,6 @@
 ;;;
-;;; Example: Sine 2
-;;; ===============
+;;; Example: Cartesian Axes
+;;; =======================
 ;;;
 ;;; This example demonstrates how to use Abscissa to generate a 2D line
 ;;; plot of a sine function with customization of axes labels, ranges, and
@@ -28,8 +28,8 @@
 ;; axes limits are declared to be [3.5,3.5] X [-1.5,1.5]. The axes
 ;; coordinate labels are declared to be "x" and "y". The axes major grid
 ;; lines are declared to be solid lines.
-([pdf name: "sine-2.pdf"] 
- ([figure] 
+([pdf name: "cartesian-axes.pdf"] 
+ ([figure]
   ([cartesian x-label: "x"
 			  y-label: "y"
 			  x-limits: '(-3.5 . 3.5)
