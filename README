@@ -79,25 +79,53 @@ breaking changes may occur, and there may still be critical bugs.
 Installation
 ============
 
-Latest "Stable" Release
------------------------
+Absicssa is packaged as a Chicken Egg. Thus, installing Abscissa should
+simply be a matter of downloading a copy of the source and running
+chicken-install in the top level of the source tree. (See
+http://wiki.call-cc.org if you're unfamiliar with Chicken Scheme.) The only
+prequisites are a working installation of Chicken Scheme and
+Gnuplot. Detailed installation instructions are as follows:
 
-Abscissa has not yet been formally released. You may, however, install a
-development snapshot; see Latest Development Version section.
+0. Ensure that the following prequisite software has been installed on the
+   target machine:
 
-Latest Development Version
---------------------------
+       * Chicken Scheme: Abscissa has been tested using version 4.8.0.5.
 
-1. Clone the git repository on github; e.g.
+       * Gnuplot: Abscissa has been tested using version 4.6. Be sure
+         that Gnuplot can be executed using the command "gnuplot".
+
+1. Download a copy of the Abscissa source code from Github. The latest release 
+   version can be downloaded from Github using,
+
+       wget https://github.com/bsilbaugh/chicken-abscissa/archive/v0.1.0.tar.gz
+
+   or if you prefer the zip format
+
+       wget https://github.com/bsilbaugh/chicken-abscissa/archive/v0.1.0.zip
+
+   The latest development version can be obtained by downloading a snapshop
+   from Github,
+
+       wget https://github.com/bsilbaugh/chicken-abscissa/archive/master.zip
+
+   or cloning the repository,
 
        git clone https://github.com/bsilbaugh/chicken-abscissa.git
 
-2. Change the current working directory to the directory of the cloned
-   repository; e.g.
+
+2. Unpack the downloaded archive file; e.g.
+
+       tar -xzvf chicken-abscissa-v0.1.0.tar.gz
+
+   or if you downloaded the archive in the zip format
+
+       unzip chicken-abscissa-v0.1.0.zip
+
+3. Change the current working directory to the newly unpacked directory
 
        cd chicken-abscissa
 
-3. Compile and install using the chicken-install program; e.g.
+4. Compile and install using the chicken-install program; e.g.
 
        chicken-install
 
