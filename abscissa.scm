@@ -13,6 +13,7 @@
    pdf
    figure
    cartesian
+   polar
    lines
    points
    lines-points
