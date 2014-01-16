@@ -45,6 +45,27 @@
 (define (batch file)
   (call-with-output-pipe "gnuplot" file))
 
+(define ((grid-cmd major-grid) p)
+  (cond ((eq? '-- major-grid)
+		 (display "set grid linestyle 0" p))
+		((eq? '- major-grid)
+		 (display "set grid linestyle -1 lc rgb \"grey\"" p))
+		((fixnum? major-grid)
+		 (display "set grid linestyle " p)
+		 (display (number->string major-grid) p)))
+  (newline p))
+
+(define ((limits-cmd cmd-str ab) p)
+  (if ab
+	  (begin
+		(display cmd-str p)
+		(display "[" p)
+		(display (car ab) p)
+		(display ":" p)
+		(display (cdr ab) p)
+		(display "]" p)
+		(newline p))))
+
 ;;; === Plot Elements ===
 
 (define ((window) fig)
@@ -89,25 +110,52 @@
 	(display-legend p)
 	(ax p)))
 
+(define (axes cases . displays)
+  (define (exec f)
+	(f p))
+  (define (display-comma p)
+	(display ", " p))
+  (let ((with-stmts (intersperse (map car cases) display-comma))
+		(data-stmts (map cdr cases)))
+	(lambda (p)
+	  (for-each exec displays)
+	  (display "plot " p)
+	  (for-each exec with-stmts)
+	  (newline p)
+	  (for-each exec data-stmts))))
+
+(define ((polar #!key
+				(t-limits #f)
+				(r-limits #f)
+				(major-grid #f)) . cases)
+  (define (display-defaults p)
+	(display "unset border" p)
+	(newline p)
+	(display "unset xtics" p)
+	(newline p)
+	(display "unset ytics" p)
+	(newline p)
+	(display "set size square" p)
+	(newline p))
+  (define (display-polar-grid p)
+	(if major-grid
+		(begin
+		  (display "set grid polar" p)
+		  (newline p))))
+  (axes cases
+		display-defaults
+		display-polar-grid
+		(grid-cmd major-grid)
+		(limits-cmd "set trange " t-limits)
+		(limits-cmd "set rrange " r-limits)))
+		
 (define ((cartesian #!key 
 					(x-limits #f)
 					(y-limits #f)
 					(x-label #f)
 					(y-label #f)
 					(major-grid #f)) . cases)
-  (define (display-comma p)
-	(display ", " p))
-  (define (display-limits cmd-str ab p)
-	(if ab
-		(begin
-		  (display cmd-str p)
-		  (display "[" p)
-		  (display (car ab) p)
-		  (display ":" p)
-		  (display (cdr ab) p)
-		  (display "]" p)
-		  (newline p))))
-  (define (display-label cmd-str label p)
+  (define ((label-cmd cmd-str label) p)
 	(if label
 		(begin
 		  (display cmd-str p)
@@ -115,35 +163,12 @@
 		  (display label p)
 		  (display #\" p)
 		  (newline p))))
-  (define (display-x-limits p)
-	(display-limits "set xrange " x-limits p))
-  (define (display-y-limits p)
-	(display-limits "set yrange " y-limits p))
-  (define (display-x-label p)
-	(display-label "set xlabel " x-label p))
-  (define (display-y-label p)
-	(display-label "set ylabel " y-label p))
-  (define (display-grid p)
-	(cond ((eq? '-- major-grid)
-		   (display "set grid linestyle 0" p))
-		  ((eq? '- major-grid)
-		   (display "set grid linestyle -1 lc rgb \"grey\"" p))
-		  ((fixnum? major-grid)
-		   (display "set grid linestyle " p)
-		   (display (number->string major-grid) p)))
-	(newline p))
-  (let ((with-stmts (intersperse (map car cases) display-comma))
-		(data-stmts (map cdr cases)))
-	(lambda (p)
-	  (display-grid p)
-	  (display-x-limits p)
-	  (display-y-limits p)
-	  (display-x-label p)
-	  (display-y-label p)
-	  (display "plot " p)
-	  (for-each (lambda (f) (f p)) with-stmts)
-	  (newline p)
-	  (for-each (lambda (f) (f p)) data-stmts))))
+  (axes cases
+		(grid-cmd major-grid)
+		(limits-cmd "set xrange " x-limits)
+		(limits-cmd "set yrange " y-limits)
+		(label-cmd "set xlabel " x-label)
+		(label-cmd "set ylabel " y-label)))
 
 ; TODO
 ; (define ((meta-polar-axes) . cases))
