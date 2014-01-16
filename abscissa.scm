@@ -127,8 +127,12 @@
 (define ((polar #!key
 				(t-limits #f)
 				(r-limits #f)
+				(x-limits #f)
+				(y-limits #f)
 				(major-grid #f)) . cases)
   (define (display-defaults p)
+	(display "set polar" p)
+	(newline p)
 	(display "unset border" p)
 	(newline p)
 	(display "unset xtics" p)
@@ -147,7 +151,9 @@
 		display-polar-grid
 		(grid-cmd major-grid)
 		(limits-cmd "set trange " t-limits)
-		(limits-cmd "set rrange " r-limits)))
+		(limits-cmd "set rrange " r-limits)
+		(limits-cmd "set xrange " x-limits)
+		(limits-cmd "set yrange " y-limits)))
 		
 (define ((cartesian #!key 
 					(x-limits #f)
